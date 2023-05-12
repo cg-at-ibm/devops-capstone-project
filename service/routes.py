@@ -81,18 +81,27 @@ def get_accounts(account_id):
     return account.serialize(), status.HTTP_200_OK
 
 
-######################################################################
-# UPDATE AN EXISTING ACCOUNT
-######################################################################
-
-# ... place you code here to UPDATE an account ...
-
 
 ######################################################################
 # DELETE AN ACCOUNT
 ######################################################################
 
 # ... place you code here to DELETE an account ...
+@app.route("/accounts/<int:account_id>", methods=["DELETE"])
+def delete_accounts(account_id):
+    """
+    Deletes an account
+    This endpoint will delete an Account based the account_id that is requested
+
+    If the account is not found, it won't do anything
+    """
+    app.logger.info("Request to delete an Account with id: %s", account_id)
+    account = Account.find(account_id)
+    if not account:
+        return
+    else:
+        Account.delete(account)
+        return "", status.HTTP_204_NO_CONTENT
 
 
 ######################################################################
